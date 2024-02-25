@@ -1,4 +1,5 @@
-fun main(args: Array<String>) {
+fun main() {
     val newArchives = ArchivesListScreen (Resources.ARCHIVES)
-    Menu.showMenu(newArchives)
+    ScreenManager.showScreen(newArchives)
+
 }
