@@ -1,18 +1,27 @@
 import Scanner.scanner
 
+
 object InputHandler {
     fun getMenuInput(menuOptions: MutableSet<Int>): Int {
-        val input: Int
         println("Введите пункт меню:")
-        try {
-            input = scanner.nextInt()
-            scanner.nextLine()
-        } catch (e: Exception) {
-            scanner.nextLine()
-            println("Нужно ввести цифру с номером пункта меню, а не произвольный набор символов.")
-            println("Попробуйте еще раз!")
-            println()
-            return -1
+        val uncheckedInput = scanner.nextLine()
+        var input = checkTheInput(uncheckedInput)
+        when (input) {
+            -1 -> {
+                println("Нужно ввести цифру с номером пункта меню")
+                println("Попробуйте еще раз!")
+                println()
+                return -1
+            }
+
+            -2 -> {
+                println("Нужно ввести цифру с номером пункта меню, а не набор символов.")
+                println("Попробуйте еще раз!")
+                println()
+                return -1
+            }
+
+            else -> input = uncheckedInput.toInt()
         }
         if (menuOptions.contains(input)) {
             return input
@@ -30,7 +39,7 @@ object InputHandler {
             println("Введите название:")
             name = scanner.nextLine()
 
-            if (name.isEmpty()) {
+            if (name.isBlank()) {
                 println("Пустое название нельзя использовать")
                 println()
             } else {
@@ -46,7 +55,7 @@ object InputHandler {
                 while (true) {
                     println("Введите текст заметки: ")
                     message = scanner.nextLine()
-                    if (message.isEmpty()) {
+                    if (message.isBlank()) {
                         println("Пустое содержание нельзя использовать")
                         println()
                     } else {
@@ -58,6 +67,21 @@ object InputHandler {
 
             else -> return Element(name)
         }
+    }
 
+    fun checkTheInput(input: String): Int {
+        val regex = "\\d+".toRegex()
+        if (input.isBlank()) {
+            return -1
+        } else {
+            if (!regex.matches(input)) {
+                return -2
+            } else {
+                if (input.length > 1 && input.first() == '0') {
+                    return -2
+                } else return 1
+            }
+        }
     }
 }
+
