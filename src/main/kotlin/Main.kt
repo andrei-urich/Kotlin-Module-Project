@@ -1,3 +1,5 @@
-fun main(args: Array<String>) {
-    println("Hello World!")
+fun main() {
+    val newArchives = ArchivesListScreen (Resources.ARCHIVES)
+    ScreenManager.showScreen(newArchives)
+
 }
